@@ -3,8 +3,6 @@ import drawSvg
 import opensimplex
 import time
 
-drawSvg.Drawing
-
 def noise(coords, frequency=1, amplitude=1, octaves=1, lacunarity=2, gain=0.5):
     octave_amplitude = amplitude
     octave_frequency = frequency
@@ -44,8 +42,8 @@ def noise(coords, frequency=1, amplitude=1, octaves=1, lacunarity=2, gain=0.5):
 class Pozyvec:
     drawing = None
 
-    def _init(self, width, height, pixel_scale, stroke_width, stroke_color):
-        self.drawing = drawSvg.Drawing(width, height, displayInline=True)
+    def _init(self, width, height, pixel_scale, stroke_width, stroke_color, display_inline):
+        self.drawing = drawSvg.Drawing(width, height, displayInline=display_inline)
         self.drawing.setPixelScale(pixel_scale)
         self.drawing.stroke_width = stroke_width
         self.drawing.stroke_color = stroke_color
@@ -59,8 +57,8 @@ class Pozyvec:
 pozyvec = Pozyvec()
 
 
-def init(width, height, pixel_scale=2, stroke_width=1, stroke_color="black"):
-    pozyvec._init(width, height, pixel_scale, stroke_width, stroke_color)
+def init(width, height, pixel_scale=2, stroke_width=1, stroke_color="black", display_inline=False):
+    pozyvec._init(width, height, pixel_scale, stroke_width, stroke_color, display_inline)
 
 
 def _move_to(self, x, y):
@@ -86,6 +84,7 @@ def _line_to(self, x, y):
         self.current_path = drawSvg.Path(
             stroke_width=self.stroke_width, stroke=self.stroke_color, fill="none"
         )
+        self.current_path.M(x, y)
 
     # draw a line to x, y
     self.current_path.L(x, y)
